@@ -4,6 +4,9 @@
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
+    <feature name="Contacts">
+        <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
+    </feature>
     <name>SearchContactsAPI</name>
     <description>
         Hello World sample application that responds to the deviceready event.
@@ -52,7 +55,5 @@
     <gap:splash gap:platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
     <access origin="http://127.0.0.1*" />
-    <feature name="Contacts">
-        <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
-    </feature>
+    <gap:plugin name="org.apache.cordova.contacts" />
 </widget>
