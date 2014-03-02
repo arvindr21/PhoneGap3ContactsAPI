@@ -1,13 +1,13 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-   // we will not be doing anything!!
+    // we will not be doing anything!!
 }
 
-$(document).on("pageshow", function(){
+$(document).on("pageshow", function () {
     $.mobile.loading("hide");
     $("body").removeClass('ui-disabled');
-if ($("#contactsList").length == 1) {
+    if ($("#contactsList").length == 1) {
         $("body").addClass('ui-disabled').css("background", "#000");
         $.mobile.loading("show");
         var options = new ContactFindOptions();
@@ -15,41 +15,39 @@ if ($("#contactsList").length == 1) {
         options.multiple = true;
         var filter = ["displayName", "phoneNumbers"];
         navigator.contacts.find(filter, onSuccess, onError, options);
-    }
-    else if ($("#addContact").length == 1) {
+    } else if ($("#addContact").length == 1) {
         bindAddContactEvents();
     }
 });
 
 function onSuccess(contacts) {
     var html = "";
-    //alert(contacts[0].phoneNumbers.length);
     for (var i = 0; i < contacts.length; i++) {
         if ($.trim(contacts[i].displayName).length != 0 || $.trim(contacts[i].nickName).length != 0) {
-            html += '<li data-role="collapsible" data-iconpos="right" data-shadow="false" data-corners="false">';
+            html += '<li>';
             html += '<h2>' + contacts[i].displayName ? contacts[i].displayName : contacts[i].nickName + '</h2>';
-            if (contacts[i].phoneNumbers){
-            html += '<ul class="innerlsv" data-role="listview" data-inset="true">';
-            html += '<li><h3>Phone Numbers</h3></li>';
-            for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
-                html += "<li>Type: " + contacts[i].phoneNumbers[j].type + "<br/>" +
-                    "Value: " + contacts[i].phoneNumbers[j].value + "<br/>" +
-                    "Preferred: " + contacts[i].phoneNumbers[j].pref +"</li>";
+            if (contacts[i].phoneNumbers) {
+                html += '<ul class="innerlsv" data-role="listview" data-inset="true">';
+                html += '<li><h3>Phone Numbers</h3></li>';
+                for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+                    html += "<li>Type: " + contacts[i].phoneNumbers[j].type + "<br/>" +
+                        "Value: " + contacts[i].phoneNumbers[j].value + "<br/>" +
+                        "Preferred: " + contacts[i].phoneNumbers[j].pref + "</li>";
+                }
+                html += "</ul>";
             }
-            html += "</ul>";
-        }
             html += '</li>';
         }
     }
-    if(contacts.length === 0)
-    {
-        html =  '<li data-role="collapsible" data-iconpos="right" data-shadow="false" data-corners="false">';
+    if (contacts.length === 0) {
+        html = '<li data-role="collapsible" data-iconpos="right" data-shadow="false" data-corners="false">';
         html += '<h2>No Contacts</h2>';
         html += '<label>No Contacts Listed</label>';
         html += '</li>';
     }
     $("#contactsList").html(html);
-    window.setTimeout(function(){$("#contactsList").listview().listview('refresh'); $(".innerlsv").listview().listview('refresh');}, 9);
+    $("#contactsList").listview().listview('refresh');
+    $(".innerlsv").listview().listview('refresh');
     $.mobile.loading("hide");
     $("body").removeClass('ui-disabled');
 }
